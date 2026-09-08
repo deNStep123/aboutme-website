@@ -1,3 +1,3 @@
 lo               UNKNOWN        127.0.0.1/8 ::1/128 
 enp2s0           DOWN           
-enp4s0           UP             85.198.143.252/29 fe80::e9d8:e93c:7b91:3835/64 
+enp4s0           UP             <PUBLIC_IP>/29 fe80::e9d8:e93c:7b91:3835/64 
