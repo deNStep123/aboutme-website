@@ -1,0 +1,28 @@
+network:
+  version: 2
+  ethernets:
+    NM-2ffc60f9-0ba4-41f1-bbf3-d6d3c10be88b:
+      renderer: NetworkManager
+      match:
+        name: "enp4s0"
+        macaddress: "00:1B:21:21:80:B9"
+      addresses:
+      - "85.198.143.252/29"
+      nameservers:
+        addresses:
+        - 195.24.128.65
+        - 8.8.8.8
+        - 8.8.4.4
+      gateway4: 85.198.143.249
+      dhcp6: true
+      ipv6-address-generation: "stable-privacy"
+      wakeonlan: true
+      networkmanager:
+        uuid: "2ffc60f9-0ba4-41f1-bbf3-d6d3c10be88b"
+        name: "Ethernet connection 2"
+        passthrough:
+          connection.timestamp: "1788516436"
+          ethernet.auto-negotiate: "true"
+          ipv4.may-fail: "false"
+          ipv6.ip6-privacy: "-1"
+          proxy._: ""

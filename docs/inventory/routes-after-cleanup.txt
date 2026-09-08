@@ -1,0 +1,2 @@
+default via 85.198.143.249 dev enp4s0 proto static metric 100 
+85.198.143.248/29 dev enp4s0 proto kernel scope link src 85.198.143.252 metric 100 

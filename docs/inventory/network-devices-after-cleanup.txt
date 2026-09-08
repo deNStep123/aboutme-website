@@ -1,0 +1,4 @@
+DEVICE  TYPE      STATE                   CONNECTION            
+enp4s0  ethernet  connected               Ethernet connection 2 
+lo      loopback  connected (externally)  lo                    
+enp2s0  ethernet  unavailable             --                    
