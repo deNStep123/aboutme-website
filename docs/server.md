@@ -1,30 +1,65 @@
-# Текущее состояние сервера
+## Base system
+- OS: Ubuntu 26.04.1 LTS
+- Time zone: Europe/Kyiv
+- Time service: chrony
+- NTP synchronization confirmed
+- System updated and rebooted
+- No failed systemd units detected after reboot
 
-## Базовая система
+## SSH hardening
 
-- ОС: Ubuntu 26.04.1 LTS
-- Часовой пояс: Europe/Kyiv
-- Служба времени: chrony
-- NTP-синхронизация подтверждена
-- Система обновлена и перезагружена
-- После перезагрузки неуспешных systemd units не обнаружено
+SSH is configured to use public-key authentication for remote administration.
 
-## Сеть
+Current security configuration:
 
-- Основной Ethernet-интерфейс используется для default route.
-- Второй Ethernet-интерфейс диагностирован, но не изменялся.
-- Второй интерфейс физически отключён и находится в состоянии `NO-CARRIER`.
-- Для интерфейса существует сохранённый NetworkManager connection profile.
-- IPv4-конфигурация второго интерфейса использует статический адрес во внутренней сети.
-- Скорость интерфейса ограничена 100 Mb/s, full duplex; auto-negotiation отключена.
+- SSH port: `22`
+- Public-key authentication: enabled
+- Password authentication: disabled
+- Keyboard-interactive authentication: disabled
+- Root SSH login: disabled
+- PAM: enabled
 
-Пока кабель не подключён, профиль оставляем нетронутым и не активируем вручную. Его gateway потенциально способен добавить второй default route. Настройка резервного канала и failover отложена до восстановления физического подключения.
+The hardening configuration is maintained separately in:
 
-## Границы текущего этапа
+`/etc/ssh/sshd_config.d/99-hardening.conf`
 
-На этом этапе не менялись пользователи, sudo-права, SSH, UFW/firewall, Netplan и настройки основного интерфейса. Это намеренно: сервер удалённый, поэтому любые потенциально нарушающие доступ изменения выполняются только отдельным контролируемым шагом.
+The configuration was validated with:
 
-## Отложенные технические задачи
+```bash
+sudo sshd -t
+```
 
-- Перевести рабочую Netplan-конфигурацию с устаревшего `gateway4` на `routes:` в отдельное окно обслуживания.
-- Вернуться к `enp2s0` только после физического подключения кабеля и решения, нужен ли ему LAN-доступ или настоящий failover.
+The effective SSH configuration was verified with:
+
+```bash
+sudo sshd -T
+```
+
+The following values were confirmed:
+
+```text
+permitrootlogin no
+pubkeyauthentication yes
+passwordauthentication no
+kbdinteractiveauthentication no
+```
+
+### Authentication verification
+
+Key-based login was successfully tested from a Windows client.
+
+A second test explicitly disabled public-key authentication:
+
+```powershell
+ssh -o PubkeyAuthentication=no <USERNAME>@<PUBLIC_IP>
+```
+
+The server rejected the connection with:
+
+```text
+Permission denied (publickey).
+```
+
+This confirmed that password-based SSH authentication is no longer available.
+
+The existing SSH session was kept open while the configuration was applied and the new authentication method was tested, reducing the risk of losing remote access.
