@@ -63,3 +63,23 @@ Permission denied (publickey).
 This confirmed that password-based SSH authentication is no longer available.
 
 The existing SSH session was kept open while the configuration was applied and the new authentication method was tested, reducing the risk of losing remote access.
+
+## Firewall (UFW)
+
+The server uses UFW (Uncomplicated Firewall) as the host-based firewall.
+
+Current firewall configuration:
+
+- UFW: enabled
+- Enabled on system startup: yes
+- Default incoming policy: deny
+- Default outgoing policy: allow
+- Default routed policy: disabled
+- Logging: low
+- SSH: TCP port 22 allowed
+- RDP: TCP port 3389 allowed
+- IPv4 and IPv6 firewall rules enabled
+
+The firewall was enabled only after explicitly allowing SSH and RDP access to avoid losing remote administration access.
+
+SSH connectivity was verified after firewall activation.
