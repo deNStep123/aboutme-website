@@ -1,7 +1,3 @@
-# Useful Commands
-
-Quick reference for Linux server administration and troubleshooting.
-
 ## System
 
 ```bash
