@@ -63,3 +63,26 @@ Permission denied (publickey).
 ```
 
 This confirmed that SSH password authentication was successfully disabled without losing key-based remote access.
+
+### Backup route through secondary interface
+
+Problem:
+Traffic to the planned backup endpoint was initially routed through the primary external interface.
+
+Investigation:
+- Checked the routing table with `ip route`.
+- Checked route selection with `ip route get`.
+- Verified connectivity to the office gateway.
+- Confirmed that `enp2s0` is the working path to the office LAN.
+- Added a temporary host route through `192.168.1.1`.
+- Verified the new route with `ip route get`.
+- Tested connectivity to the backup endpoint.
+
+Result:
+The server correctly selected `enp2s0` and `192.168.1.1` for the test destination. The gateway then returned `Destination Net Unreachable`.
+
+Conclusion:
+The Linux server-side routing test succeeded. Further investigation is required on the pfSense side to establish the complete backup path, including routing, NAT/port forwarding and return traffic.
+
+Next step:
+Confirm the exact pfSense configuration and backup SSH port before making the route persistent.
