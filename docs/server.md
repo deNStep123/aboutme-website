@@ -83,3 +83,21 @@ Current firewall configuration:
 The firewall was enabled only after explicitly allowing SSH and RDP access to avoid losing remote administration access.
 
 SSH connectivity was verified after firewall activation.
+
+## Backup network path
+
+The server has a secondary Ethernet interface connected to the office LAN.
+
+- Primary interface: `enp4s0`
+- Backup interface: `enp2s0`
+- Backup LAN: `192.168.1.0/24`
+- Server address on backup LAN: `192.168.1.245/24`
+- Office gateway: `192.168.1.1`
+
+The intended purpose of the secondary interface is emergency/backup administrative access through the office firewall and an independent ISP path.
+
+During testing, a temporary host route was used to verify that traffic for the designated backup endpoint could be forced through the office LAN. The route selection was confirmed with `ip route get`.
+
+The test reached the office gateway, but the gateway returned `Destination Net Unreachable` for the external backup endpoint. This indicates that the server-side route was functioning as intended and that the remaining work is on the pfSense routing/NAT/port-forward side.
+
+The temporary route is not currently part of the persistent server configuration.
