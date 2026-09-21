@@ -108,8 +108,14 @@ apt update                 # refresh repositories
 apt upgrade                # install updates
 apt list --upgradable      # available updates
 apt policy <pkg>           # package/version info
+apt show <pkg>		   # full package info
+apt upgrade --simulate ]
+                       } - # simulation mode
+aot -s upgrade         ]   
+---
 dpkg -l                    # installed packages
 dpkg -l | grep <name>      # find installed package
+---
 snap list                  # installed snaps
 snap services              # snap services
 ```
